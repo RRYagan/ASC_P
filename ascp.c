@@ -183,7 +183,11 @@ int main(int argc, char **argv) {
         resized[i*3+2] = (uint8_t)(fmaxf(0, fminf(1, c.b)) * 255);
     }
 
-    stbi_write_png(argv[2], TARGET_SIZE, TARGET_SIZE, 3, resized, 0);
+    // stbi_write_png(argv[2], TARGET_SIZE, TARGET_SIZE, 3, resized, 0);
+    // retrun raw binary rgb
+    FILE *out = fopen(argv[2], "wb");
+    fwrite(resized, 1, TARGET_SIZE * TARGET_SIZE * 3, out);
+    fclose(out);
     free(img); free(resized); free(L); free(A); free(B);
     return 0;
 }
